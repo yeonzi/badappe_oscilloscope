@@ -46,12 +46,12 @@ int image_edge_dect(image_t * img)
 
             conv_tmp += image_pixel(img, x0 + 1, y0)[0];
             conv_tmp += image_pixel(img, x0 + 1, y0 + 1)[0];
-            conv_tmp += image_pixel(img, x0 + 1, y0 + 1)[0];
+            conv_tmp += image_pixel(img, x0 + 1, y0 - 1)[0];
             conv_tmp += image_pixel(img, x0, y0 + 1)[0];
 
             conv_tmp -= image_pixel(img, x0 - 1, y0)[0];
             conv_tmp -= image_pixel(img, x0 - 1, y0 - 1)[0];
-            conv_tmp -= image_pixel(img, x0 - 1, y0 - 1)[0];
+            conv_tmp -= image_pixel(img, x0 - 1, y0 + 1)[0];
             conv_tmp -= image_pixel(img, x0, y0 - 1)[0];
             
             conv_tmp = (float)fabs(conv_tmp / 8.0);

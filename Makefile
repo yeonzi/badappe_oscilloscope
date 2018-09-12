@@ -44,4 +44,4 @@ clean:
 	rm -f ${DIR_BIN}/${TARGET}
 
 run:
-	@time ${BIN_TARGET}
+	@${BIN_TARGET}

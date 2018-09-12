@@ -28,8 +28,7 @@ SOFTWARE.
 #include <bmp.h>
 #include <utils.h>
 #include <wave.h>
-
-#include <gperftools/profiler.h>
+#include <path.h>
 
 int frame_cnt = 0;
 int frame_index = 0;
@@ -54,7 +53,7 @@ int main(void)
 
 	create_tmp_dir();
 
-	transform_video("./test-y.mp4");
+	transform_video("./input.mp4");
 
 	frame_cnt = get_frame_cnt();
 
@@ -63,10 +62,7 @@ int main(void)
 	sa.sa_handler = &show_proc;
 	sa.sa_flags = SA_RESTART;
 	sigaction(SIGALRM, &sa, NULL);
-	alarm(1);
-
-	ProfilerStart("./test.prof");
-	ProfilerRegisterThread();
+	alarm(3);
 
 	wav = wave_new(2, 48000, (48000 / 24) * frame_cnt);
 
@@ -88,9 +84,11 @@ int main(void)
 
 		image_binary(img);
 
-		sprintf(path, "./tmp/frames_proc/v-%05d.bmp", frame_index);
+		// sprintf(path, "./tmp/frames_proc/v-%05d.bmp", frame_index);
 
-		bmp_save(img, path);
+		// bmp_save(img, path);
+
+		gen_path(img, wav, frame_index - 1);
 
 		image_free(img);
 		
@@ -100,17 +98,18 @@ int main(void)
 
 	fprintf(stderr, "\nProcess end.\n");
 
-	ProfilerStop();
-
 	alarm(0);
+
+	fprintf(stderr, "\nSaving.\n");
 
 	wave_save(wav, "./out.wav");
 
 	wave_free(wav);
 
-	/*
-	system("rm -rf ./tmp");
-	*/
+	fprintf(stderr, "\nCleaning.\n");
+
+	remove_tmp_dir();
+
 	return 0;
 }
 
@@ -125,15 +124,15 @@ void show_proc(int signal)
 	static int time_m = 0;
 	static int time_h = 0;
 
-	int fps;
+	float fps;
 	float kbps;
 	float speed;
 
-	fps = frame_index - priv_index;
+	fps = (frame_index - priv_index) / 3.0;
 	kbps = (fps * frame_s)/1000.0;
 	priv_index = frame_index;
 	speed = (float)fps / (float)24;
-	time_s ++;
+	time_s += 3;
 
 	if (time_s == 60) {
 		time_s = 0;
@@ -145,9 +144,9 @@ void show_proc(int signal)
 		time_h ++;
 	}
 
-	fprintf(stderr, "\rframe= %d fps= %d time=%02d:%02d:%02ds bitrate=%.1fkbits/s speed=%.2fx SIG=%d",\
+	fprintf(stderr, "\rframe= %d fps= %.1f time=%02d:%02d:%02ds bitrate=%.1fkbits/s speed=%.2fx SIG=%d",\
 		frame_index, fps, time_h, time_m, time_s, kbps, speed, signal);
 	fflush(stderr);
 
-	alarm(1);
+	alarm(3);
 }

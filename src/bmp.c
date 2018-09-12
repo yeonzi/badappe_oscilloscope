@@ -23,7 +23,7 @@ SOFTWARE.
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
-#include <image.h>
+#include <bmp.h>
 
 
 
