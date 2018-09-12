@@ -6,7 +6,7 @@ SRC = $(wildcard ${DIR_SRC}/*.c)
 OBJ = $(patsubst %.c,${DIR_OBJ}/%.o,$(notdir ${SRC}))
 
 CC = clang
-CFLAGS = -g -pipe -O2 -Wall -Wextra -std=c99 -Wcomment -I${DIR_SRC} -lm
+CFLAGS = -g -pipe -O2 -Wall -Wextra -std=c99 -Wcomment -I${DIR_SRC} -lm -D_POSIX_C_SOURCE=200809L
 
 TARGET = v2w
 
@@ -44,4 +44,4 @@ clean:
 	rm -f ${DIR_BIN}/${TARGET}
 
 run:
-	@time ${BIN_TARGET}
+	@${BIN_TARGET}
