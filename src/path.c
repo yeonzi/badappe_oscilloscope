@@ -36,8 +36,6 @@ int gen_path(image_t * img, wave_t * wav, int frame_no)
 
 	static int last_x = 0;
 	static int last_y = 0;
-}
 
-int main(void) {
 	return 0;
 }

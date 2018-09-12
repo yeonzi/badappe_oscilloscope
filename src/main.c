@@ -22,6 +22,16 @@ SOFTWARE.
 #include <signal.h>
 #include <unistd.h>
 
+#define _NM_
+
+#ifdef _NM_
+#define __USE_POSIX 1
+#define __USE_UXIX98 1
+#define __USE_XOPEN2K8 1
+#include <signal.h>
+#include <bits/sigaction.h>
+#endif
+
 #include <image.h>
 #include <image_binary.h>
 #include <image_edge_dect.h>
@@ -29,7 +39,9 @@ SOFTWARE.
 #include <utils.h>
 #include <wave.h>
 
+#ifdef _DEBUG_
 #include <gperftools/profiler.h>
+#endif
 
 int frame_cnt = 0;
 int frame_index = 0;
@@ -65,8 +77,10 @@ int main(void)
 	sigaction(SIGALRM, &sa, NULL);
 	alarm(1);
 
+#ifdef _DEBUG_
 	ProfilerStart("./test.prof");
 	ProfilerRegisterThread();
+#endif
 
 	wav = wave_new(2, 48000, (48000 / 24) * frame_cnt);
 
@@ -100,7 +114,9 @@ int main(void)
 
 	fprintf(stderr, "\nProcess end.\n");
 
+#ifdef _DEBUG_
 	ProfilerStop();
+#endif
 
 	alarm(0);
 

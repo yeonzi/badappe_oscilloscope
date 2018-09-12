@@ -21,6 +21,7 @@ SOFTWARE.
 #ifndef _PATH_H_
 #define _PATH_H_ 1
 
+#include <stdio.h>
 #include <image.h>
 #include <wave.h>
 

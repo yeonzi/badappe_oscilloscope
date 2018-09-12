@@ -6,14 +6,14 @@ SRC = $(wildcard ${DIR_SRC}/*.c)
 OBJ = $(patsubst %.c,${DIR_OBJ}/%.o,$(notdir ${SRC}))
 
 CC = clang
-CFLAGS = -g -pipe -O2 -Wall -Wextra -std=c99 -Wcomment -I${DIR_SRC}
+CFLAGS = -g -pipe -O2 -Wall -Wextra -std=c99 -Wcomment -I${DIR_SRC} -lm
 
 TARGET = v2w
 
 BIN_TARGET = ${DIR_BIN}/${TARGET}
 
 ${BIN_TARGET}:${OBJ}
-	$(CC) $(CFLAGS) $(OBJ) -o $@ -lprofiler
+	$(CC) $(CFLAGS) $(OBJ) -o $@
 
 ${DIR_OBJ}/%.o:${DIR_SRC}/%.c ${DIR_OBJ}
 	$(CC) $(CFLAGS) -c $< -o $@

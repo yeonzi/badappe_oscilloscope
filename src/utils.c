@@ -21,6 +21,7 @@ SOFTWARE.
 #include <stdio.h>
 #include <stdlib.h>
 
+#define __USE_MISC 1
 #include <dirent.h>
 
 #include <utils.h>
