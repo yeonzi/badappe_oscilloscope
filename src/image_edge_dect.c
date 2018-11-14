@@ -30,10 +30,13 @@ int image_edge_dect(image_t * img)
 {
 	int x0,y0;
 
-	float conv_tmp;
+	float conv_tmpx,conv_tmpy,conv_tmp;
 	float * img_tmp;
 
 	static image_t * img_out = NULL;
+
+    int Gx[3][3] = {{-1,0,1},{-2,0,2},{-1,0,1}};
+    int Gy[3][3] = {{1,2,1},{0,0,0},{-1,-2,-1}};
 
 	if (img_out == NULL) {	
 		img_out = image_new(img->width, img->height, IMG_MODEL_BGR);
@@ -42,19 +45,34 @@ int image_edge_dect(image_t * img)
 	for(x0 = 1; x0 < img->width - 1; x0++){
         for(y0 = 1; y0 < img->height - 1; y0++){
             /* ergodic pixel in image */
-            conv_tmp = 0;
+            conv_tmpx = 0;
+            conv_tmpy = 0;
 
-            conv_tmp += image_pixel(img, x0 + 1, y0)[0];
-            conv_tmp += image_pixel(img, x0 + 1, y0 + 1)[0];
-            conv_tmp += image_pixel(img, x0 + 1, y0 - 1)[0];
-            conv_tmp += image_pixel(img, x0, y0 + 1)[0];
+            conv_tmpx += image_pixel(img, x0 - 1, y0 - 1)[0] * Gx[0][0];
+            conv_tmpy += image_pixel(img, x0 - 1, y0 - 1)[0] * Gy[0][0];
 
-            conv_tmp -= image_pixel(img, x0 - 1, y0)[0];
-            conv_tmp -= image_pixel(img, x0 - 1, y0 - 1)[0];
-            conv_tmp -= image_pixel(img, x0 - 1, y0 + 1)[0];
-            conv_tmp -= image_pixel(img, x0, y0 - 1)[0];
+            conv_tmpx += image_pixel(img, x0, y0 - 1)[0] * Gx[0][1];
+            conv_tmpy += image_pixel(img, x0, y0 - 1)[0] * Gy[0][1];
+
+            conv_tmpx += image_pixel(img, x0 + 1, y0 - 1)[0] * Gx[0][2];
+            conv_tmpy += image_pixel(img, x0 + 1, y0 - 1)[0] * Gy[0][2];
+
+            conv_tmpx += image_pixel(img, x0 - 1, y0)[0] * Gx[1][0];
+            conv_tmpy += image_pixel(img, x0 - 1, y0)[0] * Gy[1][0];
+
+            conv_tmpx += image_pixel(img, x0 + 1, y0)[0] * Gx[1][2];
+            conv_tmpy += image_pixel(img, x0 + 1, y0)[0] * Gy[1][2];
+
+            conv_tmpx += image_pixel(img, x0 - 1, y0 + 1)[0] * Gx[2][0];
+            conv_tmpy += image_pixel(img, x0 - 1, y0 + 1)[0] * Gy[2][0];
+
+            conv_tmpx += image_pixel(img, x0, y0 + 1)[0] * Gx[2][1];
+            conv_tmpy += image_pixel(img, x0, y0 + 1)[0] * Gy[2][1];
+
+            conv_tmpx += image_pixel(img, x0 + 1, y0 + 1)[0] * Gx[2][2];
+            conv_tmpy += image_pixel(img, x0 + 1, y0 + 1)[0] * Gy[2][2];
             
-            conv_tmp = (float)fabs(conv_tmp / 8.0);
+            conv_tmp = (float)fabs(conv_tmpx) * (float)fabs(conv_tmpx) + (float)fabs(conv_tmpy) * (float)fabs(conv_tmpy);
 
             img_tmp  = image_pixel(img_out, x0, y0);
 
