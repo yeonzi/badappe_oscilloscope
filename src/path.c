@@ -112,8 +112,6 @@ int gen_path(image_t * img, wave_t * wav, int frame_no)
 				origin_y_pos[point_cnt] = scan_y;
 				origin_dist[point_cnt]  = 65536;
 				origin_avail[point_cnt] = 1;
-
-				fprintf(stderr,"(%d,%d)\n", origin_x_pos[point_cnt], origin_y_pos[point_cnt]);
 				point_cnt ++;
 
 			}

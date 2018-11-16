@@ -26,7 +26,6 @@ SOFTWARE.
 #include <image_binary.h>
 #include <image_edge_dect.h>
 #include <bmp.h>
-#include <utils.h>
 #include <wave.h>
 
 #ifdef _DEBUG_
@@ -55,30 +54,24 @@ int main(void)
 	wave_t * wav;
 	struct sigaction sa;
 
-
-	//create_tmp_dir();
-
-	//transform_video("./input.mp4");
-
-	frame_cnt = get_frame_cnt();
+	frame_cnt = 45;
 	fprintf(stderr, "Do Processing Workflow On Each Frame.\n");
 
 	sa.sa_handler = &show_proc;
 	sa.sa_flags = SA_RESTART;
 	sigaction(SIGALRM, &sa, NULL);
+	alarm(3);
 
 #ifdef _DEBUG_
 	ProfilerStart("./test.prof");
 	ProfilerRegisterThread();
 #endif
 
-	alarm(3);
-
 	wav = wave_new(2, 48000, (48000 / 24) * frame_cnt);
 
 	for (frame_index = 1; frame_index <= frame_cnt; frame_index++) {
 		
-		sprintf(path, "./tmp/frames/v-%05d.bmp", frame_index);
+		sprintf(path, "./flag/%02d_pad.bmp", frame_index);
 		fprintf(stderr,"Processing %d frame",frame_index);
 		img = bmp_read(path);
 
@@ -87,18 +80,19 @@ int main(void)
 			frame_h = img->height;
 			frame_s = 3 * frame_w * frame_h * 4;
 		}
-		fprintf(stderr,"BMP Read Done ");
+		fprintf(stderr,"%02d BMP Read Done\n",frame_index);
+		fprintf(stderr,"Binarization 1\n");
 		image_binary(img);
-		fprintf(stderr,"binary ");
+		fprintf(stderr,"Edge Detect\n");
 		image_edge_dect(img);
-		fprintf(stderr,"edge_detect ");
+		fprintf(stderr,"Binarization 2\n");
 		image_binary(img);
-		fprintf(stderr,"binary 2 ");
-
-		//sprintf(path, "./tmp/frames_proc/v-%05d.bmp", frame_index);
-
-		//bmp_save(img, path);
-
+		
+//#ifdef _DEBUG_
+		sprintf(path, "./tmp/frames_proc/proc-%02d.bmp", frame_index);
+		bmp_save(img, path);
+//#endif
+		fprintf(stderr,"Path Generating\n");
 		gen_path(img, wav, frame_index - 1);
 
 		image_free(img);
@@ -113,7 +107,6 @@ int main(void)
 	ProfilerStop();
 #endif
 
-	alarm(0);
 
 	fprintf(stderr, "\nSaving.\n");
 
@@ -121,9 +114,6 @@ int main(void)
 
 	wave_free(wav);
 
-	fprintf(stderr, "\nCleaning.\n");
-
-	//remove_tmp_dir();
 
 	return 0;
 }
