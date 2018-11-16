@@ -5,16 +5,20 @@ DIR_BIN = ./bin
 SRC = $(wildcard ${DIR_SRC}/*.c)
 OBJ = $(patsubst %.c,${DIR_OBJ}/%.o,$(notdir ${SRC}))
 
-CC = clang
-CFLAGS = -g -pipe -Wall -Wextra -std=c99 -Wcomment -I${DIR_SRC} -D_POSIX_C_SOURCE=200809L
-CFINFLAGS = -g -pipe -Wall -Wextra -lm -std=c99 -Wcomment -I${DIR_SRC} -D_POSIX_C_SOURCE=200809L
+CC = gcc
+#CFLAGS = -pipe -Wall -Wextra -std=c99 -Wcomment -I${DIR_SRC} -D_POSIX_C_SOURCE=200809L
+#CFINFLAGS = -pipe -Wall -Wextra -lm -std=c99 -Wcomment -I${DIR_SRC} -D_POSIX_C_SOURCE=200809L
+
+LD_LIBRARY = -lm
+CFLAGS = -pipe -s -Wall -Wextra -std=c99 -Wcomment -I${DIR_SRC} -D_POSIX_C_SOURCE=200809L
+CFINFLAGS = -pipe -s -Wall -Wextra -std=c99 -Wcomment -I${DIR_SRC} -D_POSIX_C_SOURCE=200809L
 
 TARGET = v2w
 
 BIN_TARGET = ${DIR_BIN}/${TARGET}
 
 ${BIN_TARGET}:${OBJ}
-	$(CC) $(CFINFLAGS) $(OBJ) -o $@
+	$(CC) $(CFINFLAGS) $(OBJ) -o $@ $(LD_LIBRARY)
 
 ${DIR_OBJ}/%.o:${DIR_SRC}/%.c ${DIR_OBJ}
 	$(CC) $(CFLAGS) -c $< -o $@

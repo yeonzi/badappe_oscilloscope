@@ -55,7 +55,7 @@ int main(void)
 	struct sigaction sa;
 
 	frame_cnt = 45;
-	fprintf(stderr, "Do Processing Workflow On Each Frame.\n");
+	fprintf(stdout, "Do Processing Workflow On Each Frame.\n");
 
 	sa.sa_handler = &show_proc;
 	sa.sa_flags = SA_RESTART;
@@ -72,7 +72,7 @@ int main(void)
 	for (frame_index = 1; frame_index <= frame_cnt; frame_index++) {
 		
 		sprintf(path, "./flag/%02d_pad.bmp", frame_index);
-		fprintf(stderr,"Processing %d frame",frame_index);
+		fprintf(stdout,"Processing %d frame",frame_index);
 		img = bmp_read(path);
 
 		if (frame_w == 0) {
@@ -80,19 +80,19 @@ int main(void)
 			frame_h = img->height;
 			frame_s = 3 * frame_w * frame_h * 4;
 		}
-		fprintf(stderr,"%02d BMP Read Done\n",frame_index);
-		fprintf(stderr,"Binarization 1\n");
+		fprintf(stdout,"%02d BMP Read Done\n",frame_index);
+//		fprintf(stdout,"Binarization 1\n");
 		image_binary(img);
-		fprintf(stderr,"Edge Detect\n");
+//		fprintf(stdout,"Edge Detect\n");
 		image_edge_dect(img);
-		fprintf(stderr,"Binarization 2\n");
+//		fprintf(stdout,"Binarization 2\n");
 		image_binary(img);
 		
 //#ifdef _DEBUG_
-		sprintf(path, "./tmp/frames_proc/proc-%02d.bmp", frame_index);
-		bmp_save(img, path);
+//		sprintf(path, "./tmp/frames_proc/proc-%02d.bmp", frame_index);
+//		bmp_save(img, path);
 //#endif
-		fprintf(stderr,"Path Generating\n");
+		fprintf(stdout,"Path Generating\n");
 		gen_path(img, wav, frame_index - 1);
 
 		image_free(img);
@@ -101,14 +101,14 @@ int main(void)
 
 	raise(SIGALRM);
 
-	fprintf(stderr, "\nProcess end.\n");
+	fprintf(stdout, "\nProcess end.\n");
 
 #ifdef _DEBUG_
 	ProfilerStop();
 #endif
 
 
-	fprintf(stderr, "\nSaving.\n");
+	fprintf(stdout, "\nSaving.\n");
 
 	wave_save(wav, "./out.wav");
 
@@ -149,7 +149,7 @@ void show_proc(int signal)
 		time_h ++;
 	}
 
-	fprintf(stderr, "\rframe= %d fps= %.1f time=%02d:%02d:%02ds bitrate=%.1fkbits/s speed=%.2fx SIG=%d",\
+	fprintf(stdout, "\rframe= %d fps= %.1f time=%02d:%02d:%02ds bitrate=%.1fkbits/s speed=%.2fx SIG=%d",\
 		frame_index, fps, time_h, time_m, time_s, kbps, speed, signal);
 	fflush(stderr);
 

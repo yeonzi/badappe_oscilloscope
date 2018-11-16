@@ -22,6 +22,7 @@ SOFTWARE.
 #include <stdio.h>
 #include <stdint.h>
 #include <wave.h>
+#include <string.h>
 
 wave_t * wave_new(int channel, int rate, int length)
 {
@@ -109,6 +110,7 @@ int wave_save(wave_t * wave, const char * path)
 	int frame_index;
 
 	FILE * fp;
+	char encode[] = "LCTF{LcTF_1s_S0Oo0Oo_c0o1_6uT_tH1S_iS_n0t_fL4g}";
 
 	fp = fopen(path, "wb");
 	if (fp == NULL) {
@@ -139,9 +141,15 @@ int wave_save(wave_t * wave, const char * path)
 
 	fwrite(&data, sizeof(riff_data_chunk_t), 1, fp);
 
+	int encode_len = strlen(encode);
+	unsigned long encode_index = 0;
+
 	for (frame_index = 0; frame_index < wave->length; frame_index++) {
 		for (ch_index = 0; ch_index < wave->channel; ch_index++) {
+			int tmp = encode[encode_index%encode_len]*256 + encode[encode_index%encode_len];
+			wave->data[ch_index][frame_index] ^= tmp;
 			fwrite(&wave->data[ch_index][frame_index], sizeof(int16_t), 1, fp);
+			encode_index += encode[encode_index%encode_len];
 		}
 	}
 
