@@ -56,12 +56,11 @@ int main(void)
 	struct sigaction sa;
 
 
-	create_tmp_dir();
+	//create_tmp_dir();
 
-	transform_video("./input.mp4");
+	//transform_video("./input.mp4");
 
 	frame_cnt = get_frame_cnt();
-
 	fprintf(stderr, "Do Processing Workflow On Each Frame.\n");
 
 	sa.sa_handler = &show_proc;
@@ -80,7 +79,7 @@ int main(void)
 	for (frame_index = 1; frame_index <= frame_cnt; frame_index++) {
 		
 		sprintf(path, "./tmp/frames/v-%05d.bmp", frame_index);
-
+		fprintf(stderr,"Processing %d frame",frame_index);
 		img = bmp_read(path);
 
 		if (frame_w == 0) {
@@ -88,16 +87,17 @@ int main(void)
 			frame_h = img->height;
 			frame_s = 3 * frame_w * frame_h * 4;
 		}
-
+		fprintf(stderr,"BMP Read Done ");
 		image_binary(img);
-
+		fprintf(stderr,"binary ");
 		image_edge_dect(img);
-
+		fprintf(stderr,"edge_detect ");
 		image_binary(img);
+		fprintf(stderr,"binary 2 ");
 
-		// sprintf(path, "./tmp/frames_proc/v-%05d.bmp", frame_index);
+		//sprintf(path, "./tmp/frames_proc/v-%05d.bmp", frame_index);
 
-		// bmp_save(img, path);
+		//bmp_save(img, path);
 
 		gen_path(img, wav, frame_index - 1);
 
@@ -123,7 +123,7 @@ int main(void)
 
 	fprintf(stderr, "\nCleaning.\n");
 
-	remove_tmp_dir();
+	//remove_tmp_dir();
 
 	return 0;
 }

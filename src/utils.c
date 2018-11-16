@@ -88,12 +88,14 @@ int get_frame_cnt(void)
 	DIR * dirp;
 	struct dirent * entry;
 
-	dirp = opendir("./tmp/frames");
+	dirp = opendir("./tmp/frames/");
+	
 	while ((entry = readdir(dirp)) != NULL) {
 	    if (entry->d_type == DT_REG) {
 	         frame_count++;
 	    }
 	}
+
 	closedir(dirp);
 
 	return frame_count;

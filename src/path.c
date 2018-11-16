@@ -105,7 +105,7 @@ int gen_path(image_t * img, wave_t * wav, int frame_no)
 
 	/* find all points */
 	for (scan_x = 1; scan_x < img->width; scan_x++) {
-		for (scan_y = 1; scan_y < img->width; scan_y++) {
+		for (scan_y = 1; scan_y < img->height; scan_y++) {
 			point = image_pixel(img, scan_x, scan_y);
 			if (*point > 128){
 				origin_x_pos[point_cnt] = scan_x;
@@ -113,7 +113,7 @@ int gen_path(image_t * img, wave_t * wav, int frame_no)
 				origin_dist[point_cnt]  = 65536;
 				origin_avail[point_cnt] = 1;
 
-				//printf("(%d,%d)\n", origin_x_pos[point_cnt], origin_y_pos[point_cnt]);
+				fprintf(stderr,"(%d,%d)\n", origin_x_pos[point_cnt], origin_y_pos[point_cnt]);
 				point_cnt ++;
 
 			}
