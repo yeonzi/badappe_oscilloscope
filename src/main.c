@@ -83,7 +83,7 @@ int main(void)
 		fprintf(stdout,"%02d BMP Read Done\n",frame_index);
 //		fprintf(stdout,"Binarization 1\n");
 		image_binary(img);
-//		fprintf(stdout,"Edge Detect\n");
+		fprintf(stdout,"Edge Detecting...\n");
 		image_edge_dect(img);
 //		fprintf(stdout,"Binarization 2\n");
 		image_binary(img);
@@ -92,7 +92,7 @@ int main(void)
 //		sprintf(path, "./tmp/frames_proc/proc-%02d.bmp", frame_index);
 //		bmp_save(img, path);
 //#endif
-		fprintf(stdout,"Path Generating\n");
+		fprintf(stdout,"Path Generating...\n");
 		gen_path(img, wav, frame_index - 1);
 
 		image_free(img);
