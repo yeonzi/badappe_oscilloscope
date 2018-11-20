@@ -169,14 +169,15 @@ int gen_path(image_t * img, wave_t * wav, int frame_no)
 
 
 	adjust_rate = (float)sorted_length / (float)wav_length;
-	zoom_rate = 65535 / (float)(img->width);
+	zoom_rate_wid = 65535 / (float)(img->width);
+	zoom_rate_hei = 65535 / (float)(img->height);
 
 	wav_bias = frame_no * (48000 / 24);
 
 	for (wav_index = 0; wav_index < wav_length; wav_index++) {
 		point_index = wav_index * adjust_rate;
-		wav->data[0][wav_bias] = zoom_rate * (sorted_x[point_index] - (img->width)/2);
-		wav->data[1][wav_bias] = zoom_rate * (sorted_y[point_index] - (img->height)/2);
+		wav->data[0][wav_bias] = zoom_rate_wid * (sorted_x[point_index] - (img->width)/2);
+		wav->data[1][wav_bias] = zoom_rate_hei * (sorted_y[point_index] - (img->height)/2);
 
 		wav_bias ++;
 	}

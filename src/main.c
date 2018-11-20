@@ -56,9 +56,9 @@ int main(void)
 	struct sigaction sa;
 
 
-	//create_tmp_dir();
+	create_tmp_dir();
 
-	//transform_video("./input.mp4");
+	transform_video("./input.mp4");
 
 	frame_cnt = get_frame_cnt();
 	fprintf(stderr, "Do Processing Workflow On Each Frame.\n");
