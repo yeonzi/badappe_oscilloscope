@@ -1,21 +1,3 @@
-# badapple_oscilloscope
-
-_Playing "Bad Apple!!" On Oscilloscope_
-
-## Preview
-
-[Bad Apple!! (YouTube)](https://www.youtube.com/watch?v=NnQF0sojl_0)
-[Bad Apple!! (bilibili)](https://www.bilibili.com/video/av32008295)
-
-[EVA NCOP (YouTube)](https://www.youtube.com/watch?v=PRmoaLrOMnY)
-[EVA NCOP (bilibili)](https://www.bilibili.com/video/av31907521)
-
-## Description
-
-Oscilloscope can display graphs using XY mode. This project generates a waveform file that can be used to draw video using the oscilloscope XY mode.
-
-![XY Mode](https://upload.wikimedia.org/wikipedia/commons/b/b0/Lissajous_figures_on_oscilloscope_%2890_degrees_phase_shift%29.gif)
-
-(gif was from wikipedia)
-
-If You want to do this, just download wave file from [release](https://github.com/yeonzi/badappe_oscilloscope/releases) page, playing this audio file by any player, the left and right channels are connected to the X and Y channels of the oscilloscope, and you will see the video.
+# LCTF 2018
+##Reverse b2w Source Code
+##Write Up: https://github.com/LCTF/LCTF2018/tree/master/Writeup/b2w
