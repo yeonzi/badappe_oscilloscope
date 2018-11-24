@@ -20,18 +20,24 @@ Oscilloscope can display graphs using XY mode. This project generates a waveform
 
 If You want to do this, just download wave file from [release](https://github.com/yeonzi/badappe_oscilloscope/releases) page, playing this audio file by any player, the left and right channels are connected to the X and Y channels of the oscilloscope, and you will see the video.
 
+## TODO
+
+1. Change path search algorithm to a faster algorithm.
+2. New edge detection algorithm for color frames.
+3. Can I read video frame to bitmap using libffmpeg, no need to write to disk?
+
 ## LICENSE
 
-           DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-                   Version 2, December 2004
- 
+  DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+   Version 2, December 2004
+
 Copyright (C) 2017-2018 Yeonji <yeonji@ieee.org>
 
 Everyone is permitted to copy and distribute verbatim or modified
 copies of this license document, and changing it is allowed as long
 as the name is changed.
- 
-           DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-  TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+   DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
  
  0. You just DO WHAT THE FUCK YOU WANT TO.
