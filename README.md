@@ -19,3 +19,19 @@ Oscilloscope can display graphs using XY mode. This project generates a waveform
 (gif was from wikipedia)
 
 If You want to do this, just download wave file from [release](https://github.com/yeonzi/badappe_oscilloscope/releases) page, playing this audio file by any player, the left and right channels are connected to the X and Y channels of the oscilloscope, and you will see the video.
+
+## LICENSE
+
+           DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+                   Version 2, December 2004
+ 
+Copyright (C) 2017-2018 Yeonji <yeonji@ieee.org>
+
+Everyone is permitted to copy and distribute verbatim or modified
+copies of this license document, and changing it is allowed as long
+as the name is changed.
+ 
+           DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+  TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ 
+ 0. You just DO WHAT THE FUCK YOU WANT TO.
