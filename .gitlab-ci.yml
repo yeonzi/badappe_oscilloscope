@@ -1,0 +1,12 @@
+stages:
+  - github-mirror
+
+github-push:
+  stage: github-mirror
+  script:
+    - git push git@github.com:yeonzi/badappe_oscilloscope.git --all --force
+  tags:
+    - deploy
+    - github
+    - git
+  allow_failure: true
